@@ -1,3 +1,4 @@
+// C program to input a number and print it in words
 #include <stdio.h> // header files
 int main()
 {
