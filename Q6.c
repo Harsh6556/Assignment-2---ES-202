@@ -1,3 +1,4 @@
+// C program to find first and last digits of a number
 #include <stdio.h> // header files
 #include <math.h> // header files
 
