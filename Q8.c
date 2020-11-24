@@ -1,3 +1,4 @@
+// C program to find frequency of each digit in a number
 #include <stdio.h> // header files
 #define FREQ 10 // constant
 
