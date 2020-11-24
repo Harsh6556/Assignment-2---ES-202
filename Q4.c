@@ -1,3 +1,4 @@
+// C program to print multilplication table of any number
 #include <stdio.h> // header files
 int main()
 {
