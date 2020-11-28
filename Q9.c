@@ -1,56 +1,86 @@
-// C program to input a number and print it in words
+// C program to print number in words
 #include <stdio.h> // header files
-int main()
+#include <string.h> // header files
+#include <stdlib.h> // header files
+ 
+void num_to_words(char *n) // finction that prints the number in words
 {
-    int n, rev = 0; // declare some variables
-    
-    printf("Enter any number to print in words: "); // ask user input
-    scanf("%d", &n); // read in user input
-
-    /* store the reverse of the input number */
-    while(n != 0)
+    int l = strlen(n); // store number of digits in the number
+ 
+   /* base case */
+    if (l == 0)
     {
-        rev = (rev * 10) + (n % 10);
-        n /= 10;
+        fprintf(stderr, "empty string\n");
+        return;
+    }
+    if (l > 4)
+    {
+        fprintf(stderr, "Length should not be more than 4\n");
+        return;
     }
 
-   /* extracting last digits and print it in words */
-    while(rev != 0)
+    char *single_dig[] = { "zero", "one", "two", 
+                               "three", "four","five", 
+                               "six", "seven", "eight", "nine"}; // store the single dgits numbers in words
+ 
+    char *two_dig[] = {"", "ten", "eleven", "twelve", 
+                               "thirteen", "fourteen",
+                               "fifteen", "sixteen", 
+                               "seventeen", "eighteen", "nineteen"}; // store numbers 10 to 19 in words
+ 
+    char *tens_mult[] = {"", "", "twenty", "thirty", "forty", "fifty",
+                            "sixty", "seventy", "eighty", "ninety"}; // store the tens multiples in words
+ 
+    char *tens_pow[] = {"hundred", "thousand"}; // store the tens powers in words
+ 
+    printf("\n%s: ", n); // for debugging
+ 
+    if (l == 1) // check for single digit number
     {
-        switch(rev % 10)
+        printf("%s\n", single_dig[*n - '0']);
+        return;
+    }
+ 
+    while (*n != '\0')
+    {
+ 
+        if (l >= 3) // checks for first two digits
         {
-            case 0: 
-                printf("Zero ");
-                break;
-            case 1: 
-                printf("One ");
-                break;
-            case 2: 
-                printf("Two ");
-                break;
-            case 3: 
-                printf("Three ");
-                break;
-            case 4: 
-                printf("Four ");
-                break;
-            case 5: 
-                printf("Five ");
-                break;
-            case 6: 
-                printf("Six ");
-                break;
-            case 7: 
-                printf("Seven ");
-                break;
-            case 8: 
-                printf("Eight ");
-                break;
-            case 9: 
-                printf("Nine ");
-                break;
+            if (*n -'0' != 0) {
+                printf("%s ", single_dig[*n - '0']);
+                printf("%s ", tens_pow[l-3]); 
+            }
+            --l;
         }
-        rev = rev / 10;
+ 
+        else 
+        {
+            if (*n == '1') // check for 10 - 19
+            {
+                int sum = *n - '0' + *(n + 1)- '0';
+                printf("%s\n", two_dig[sum]);
+                return;
+            }
+            else if (*n == '2' && *(n + 1) == '0') // check for 20
+            {
+                printf("twenty\n");
+                return;
+            }
+ 
+            else
+            {   /* check for 21 to 99 */
+                int i = *n - '0';
+                printf("%s ", i? tens_mult[i]: "");
+                ++n;
+                if (*n != '0')
+                    printf("%s ", single_dig[*n - '0']);
+            }
+        }
+        ++n;
     }
+}
+int main(void)
+{
+    num_to_words("6753"); // convert the number into words
     return 0;
 }
